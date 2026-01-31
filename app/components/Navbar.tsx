@@ -3,24 +3,16 @@
 import Link from 'next/link';
 import { ShoppingCart, User, Search, Menu } from 'lucide-react';
 // import { useCartStore } from '@/store/useCartStore';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Navbar() {
-    const [isClient, setIsClient] = useState(false);
     // const items = useCartStore((state) => state.items);
     const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    useEffect(() => {
-        setIsClient(true);
-        const query = searchParams.get('search');
-        if (query) setSearchQuery(query);
-    }, [searchParams]);
-
     // const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
-
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         const params = new URLSearchParams(searchParams.toString());

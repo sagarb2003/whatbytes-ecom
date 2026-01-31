@@ -12,4 +12,4 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
-export type Category = 'All' | 'Electronics' | 'Clothing' | 'Home' | 'Accessories';
+export type Category = 'All' | 'Electronics' | 'Clothing' | 'Accessories';
