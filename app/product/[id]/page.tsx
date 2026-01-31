@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Star, ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import AddToCart from "@/app/components/AddToCart";
 
 interface Props {
     params: Promise<{ id: string }>;
@@ -60,6 +61,10 @@ export default async function ProductPage({ params }: Props) {
                         <p className="text-slate-600 leading-relaxed mb-8 text-lg">
                             {product.description}
                         </p>
+
+                        <div className="max-w-xs">
+                            <AddToCart product={product} />
+                        </div>
                     </div>
                 </div>
             </div>

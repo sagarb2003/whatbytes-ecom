@@ -2,17 +2,31 @@
 
 import Link from 'next/link';
 import { ShoppingCart, User, Search, Menu } from 'lucide-react';
-// import { useCartStore } from '@/store/useCartStore';
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { useEffect } from 'react';
+import { getCartTotalItems } from '@/lib/cart';
+
 export default function Navbar() {
-    // const items = useCartStore((state) => state.items);
     const [searchQuery, setSearchQuery] = useState('');
+    const [cartCount, setCartCount] = useState(0);
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    // const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
+    useEffect(() => {
+        setCartCount(getCartTotalItems());
+        const handleUpdate = () => {
+            setCartCount(getCartTotalItems());
+        };
+        window.addEventListener('cart-updated', handleUpdate);
+        window.addEventListener('storage', handleUpdate); 
+        return () => {
+            window.removeEventListener('cart-updated', handleUpdate);
+            window.removeEventListener('storage', handleUpdate);
+        };
+    }, []);
+
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         const params = new URLSearchParams(searchParams.toString());
@@ -45,7 +59,7 @@ export default function Navbar() {
                     <div className="relative cursor-pointer hover:opacity-80 transition-opacity">
                         <ShoppingCart className="w-6 h-6" />
                         <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                            0
+                            {cartCount}
                         </span>
                         <span className="ml-2 hidden sm:inline font-medium">Cart</span>
                     </div>
